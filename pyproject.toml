@@ -2,7 +2,7 @@
 name = "depgraph"
 version = "0.1.0"
 description = "Universal dependency graph builder for popular languages (MVP: Python + JS)"
-authors = ["Твоё Имя <you@example.com>"]
+authors = ["крутой челик <почта>"]
 license = "MIT"
 readme = "README.md"
 packages = [
@@ -11,9 +11,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.11"
-
-[tool.poetry.scripts]
-depgraph = "depgraph.main:app"
 
 [build-system]
 requires = ["poetry-core"]
