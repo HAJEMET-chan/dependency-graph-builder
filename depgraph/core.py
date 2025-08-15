@@ -4,16 +4,18 @@ import networkx as nx
 
 from pprint import pprint
 
-from .utils import (get_all_files_list, 
-                    scan_python_modules, 
+from .graph import (
                     modules_to_nx_nodes, 
                     print_nx_nodes, 
                     add_dependencies_to_graph,
                     draw_graph,
                     draw_dependency_table
                     )
+from .utils import (
+    get_all_files_list,
+    scan_python_modules
+)
 from .analyzer.python_analyzer import PythonFileAnalyzer
-from .graph import visualize_graph_pyvis
 
 
 
@@ -49,6 +51,5 @@ def start_process(local_path: Path):
     add_dependencies_to_graph(G, dependencies)
     draw_dependency_table(G)
     draw_graph(G)
-    visualize_graph_pyvis(G)
 
     print_nx_nodes(G)
