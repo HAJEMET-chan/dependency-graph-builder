@@ -1,5 +1,6 @@
 import ast
 from typing import Any, Optional
+from pprint import pprint
 from copy import deepcopy
 
 from ..utils import (
@@ -23,18 +24,18 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
             'asname': Optional[str],
             'level': int
         }
+    
+    def analyze(self, code: str):
+        self.visit(ast.parse(code))
 
     def visit_Import(self, node: ast.Import):
-        super().visit_Import(node)
-
-
-        names = []
 
         for import_name in node.names:
-            names.append(import_name.name)
+            entry = self.get_entry_template()
+            full_name = import_name.name
+            
 
     def visit_ImportFrom(self, node):
-        super().visit_ImportFrom(node)
 
         for import_name in node.names:
             entry = self.get_entry_template()
@@ -49,7 +50,17 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
 
     def _add_to_results(self, res: Any):
         _validate_structure(res,self._entry_tempate_types)
+        pprint
+        (res)
         self._results.append(res)
 
     def get_entry_template(self):
         return deepcopy(self._entry_tempate)
+    
+
+code = '''
+from .. import p as r, t
+'''
+
+anal = PythonImportsAnalyzer()
+anal.analyze(code)

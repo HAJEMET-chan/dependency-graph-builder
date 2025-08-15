@@ -1,38 +1,40 @@
-from typing import get_origin, get_args, Union, List, Dict, Optional
+from typing import get_origin, get_args, Union
 
 def _validate_structure(data, template_types, path=""):
-    """
-    Рекурсивно проверяет структуру и типы данных с поддержкой typing.
-    :param data: dict, list или примитивные данные для проверки
-    :param template_types: шаблон типа (str, int, List[str], Dict[str, int], Optional[str], Union[int, str], ...)
-    :param path: для рекурсивного отслеживания места ошибки
-    :return: None, выбрасывает TypeError или ValueError при несоответствии
-    """
     origin = get_origin(template_types)
     args = get_args(template_types)
 
-    if origin is None:
-        # обычный тип (str, int и т.д.)
-        if not isinstance(data, template_types):
-            raise TypeError(f"Expected type {template_types.__name__} at '{path}', got {type(data).__name__}")
-    elif origin is Union:
-        # Union[...] или Optional[...]
-        if not any((isinstance(data, arg) if arg is not type(None) else data is None) for arg in args):
-            expected_names = ', '.join([a.__name__ if a is not type(None) else 'None' for a in args])
-            raise TypeError(f"Expected type Union[{expected_names}] at '{path}', got {type(data).__name__}")
-    elif origin in (list, List):
-        if not isinstance(data, list):
-            raise TypeError(f"Expected list at '{path}', got {type(data).__name__}")
-        if args:
-            for i, item in enumerate(data):
-                _validate_structure(item, args[0], f"{path}[{i}]")
-    elif origin in (dict, Dict):
+    if isinstance(template_types, dict):
         if not isinstance(data, dict):
             raise TypeError(f"Expected dict at '{path}', got {type(data).__name__}")
-        if args:
-            key_type, value_type = args
+        for key, expected_type in template_types.items():
+            if key not in data:
+                raise ValueError(f"Missing key '{path + key}' in data")
+            _validate_structure(data[key], expected_type, f"{path}{key}.")
+    elif origin is Union:
+        if not any(
+            (arg is type(None) and data is None) or isinstance(data, arg)
+            for arg in args
+        ):
+            expected = ', '.join([a.__name__ if a is not type(None) else "None" for a in args])
+            raise TypeError(f"Expected {expected} at '{path}', got {type(data).__name__}")
+    elif origin:
+        # list, dict, etc.
+        if origin is list:
+            if not isinstance(data, list):
+                raise TypeError(f"Expected list at '{path}', got {type(data).__name__}")
+            for i, item in enumerate(data):
+                _validate_structure(item, args[0], f"{path}[{i}].")
+        elif origin is dict:
+            if not isinstance(data, dict):
+                raise TypeError(f"Expected dict at '{path}', got {type(data).__name__}")
+            key_type, val_type = args
             for k, v in data.items():
-                _validate_structure(k, key_type, f"{path}.key")
-                _validate_structure(v, value_type, f"{path}[{k}]")
+                _validate_structure(k, key_type, f"{path}.<key>")
+                _validate_structure(v, val_type, f"{path}[{k}].")
+        else:
+            raise TypeError(f"Unsupported type {template_types} at '{path}'")
     else:
-        raise TypeError(f"Unsupported type {template_types} at '{path}'")
+        # обычный тип
+        if not isinstance(data, template_types):
+            raise TypeError(f"Expected {template_types.__name__} at '{path}', got {type(data).__name__}")
