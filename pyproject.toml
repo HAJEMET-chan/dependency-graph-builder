@@ -11,19 +11,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.11"
-typer = "^0.16.0"
-networkx = "^3.2.1"
-pydot = "^2.0.0"
-rich = "^14.1.0"
-pandas = "^2.3.1"
-matplotlib = "^3.10.5"
-pyvis = "^0.3.2"
-numpy = "^2.3.2"
-plotly = "^6.3.0"
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-ruff = "^0.5.7"
 
 [tool.poetry.scripts]
 depgraph = "depgraph.main:app"
