@@ -4,13 +4,7 @@ import networkx as nx
 
 from pprint import pprint
 
-from .graph import (
-                    modules_to_nx_nodes, 
-                    print_nx_nodes, 
-                    add_dependencies_to_graph,
-                    draw_graph,
-                    draw_dependency_table
-                    )
+from .graph import GraphControl
 from .utils import (
     get_all_files_list,
     scan_python_modules
@@ -42,14 +36,11 @@ def start_process(local_path: Path):
             analyzer.get_imports(file)
         
     python_modules = scan_python_modules(local_path)
-    nx_nodes = modules_to_nx_nodes(python_modules)
     dependencies = analyzer.results
     
-    G = nx.Graph()
-    G.add_nodes_from(nx_nodes)
-
-    add_dependencies_to_graph(G, dependencies)
-    draw_dependency_table(G)
-    draw_graph(G)
-
-    print_nx_nodes(G)
+    G = GraphControl()
+    G.add_modules_to_graph(python_modules)
+    G.add_dependencies_to_graph(dependencies)
+    G.draw_dependency_table()
+    G.draw_graph()
+    G.print_nx_nodes()
