@@ -8,4 +8,4 @@ logger = setup_logger()
 def generate_graph(local_path: str):
 
     path = Path(local_path)
-    start_process(path)
+    return start_process(path)

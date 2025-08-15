@@ -37,6 +37,9 @@ def start_process(local_path: Path):
         
     python_modules = scan_python_modules(local_path)
     dependencies = analyzer.results
+    return create_graph(dependencies, python_modules)
+
+def create_graph(dependencies, python_modules):
     
     G = GraphControl()
     G.add_modules_to_graph(python_modules)
@@ -44,3 +47,4 @@ def start_process(local_path: Path):
     G.draw_dependency_table()
     G.draw_graph()
     G.print_nx_nodes()
+    return G.graph

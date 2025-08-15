@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Poetry depgraph debug",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "depgraph.front.main",
+            "args": [
+                "C:\\Users\\оо8\\Documents\\py\\jedi"
+            ],
+            "justMyCode": false,
+            "console": "integratedTerminal"
+        }
+    ]
+}
