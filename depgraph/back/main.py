@@ -8,10 +8,6 @@ logger = setup_logger()
 
 app = typer.Typer()
 
-string = 'str'
-
-string = 'str'
-
 @app.command()
 def start(local_path: str):
     
