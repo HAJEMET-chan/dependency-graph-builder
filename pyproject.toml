@@ -15,6 +15,10 @@ typer = "^0.16.0"
 networkx = "^3.2.1"
 pydot = "^2.0.0"
 rich = "^14.1.0"
+pandas = "^2.3.1"
+matplotlib = "^3.10.5"
+pyvis = "^0.3.2"
+numpy = "^2.3.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"

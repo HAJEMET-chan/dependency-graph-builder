@@ -1,0 +1,143 @@
+2025-08-14 22:26:48 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\classes.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\completion.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\completion_cache.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\environment.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\errors.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\exceptions.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\file_name.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\helpers.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\interpreter.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\keywords.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\project.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\refactoring\extract.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\refactoring\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\replstartup.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\strings.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\api\__pycache__\__init__.cpython-312.pyc
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\cache.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\common.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\debug.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\file_io.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\analysis.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\arguments.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\base_value.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\cache.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\access.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\getattr_static.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\mixed.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\subprocess\functions.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\subprocess\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\subprocess\__main__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\value.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\compiled\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\context.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\docstrings.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\docstring_utils.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\dynamic_params.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\filters.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\finder.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\flow_analysis.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\annotation.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\base.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\conversion.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\generics.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\stub_value.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\typeshed.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\type_var.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\typing.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\utils.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\gradual\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\helpers.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\imports.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\lazy_value.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\names.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\param.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\parser_cache.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\recursion.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\references.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\signature.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\star_args.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\syntax_tree.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\sys_path.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\utils.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\decorator.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\dynamic_arrays.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\function.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\instance.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\iterable.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\klass.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\module.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\namespace.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\value\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\inference\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\parser_utils.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\django.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\flask.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\pytest.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\registry.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\stdlib.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\plugins\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\settings.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\third_party\README_typeshed.md
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\utils.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\_compatibility.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\__init__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\__main__.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\jedi\__pycache__\__init__.cpython-312.pyc
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\scripts\diff_parser_profile.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\scripts\memory_check.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\scripts\profiled_pytest.sh
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\scripts\profile_output.py
+2025-08-14 22:29:21 [INFO] depgraph.file_utils: found file C:\Users\оо8\Documents\py\jedi\scripts\wx_check.py
+2025-08-14 22:29:21 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 22:51:11 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:01:35 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:03:09 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:03:41 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:10:00 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:10:00 [INFO] depgraph.core: added 82 nodes to graph
+2025-08-14 23:10:25 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:10:25 [INFO] depgraph.core: found 88 modules in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:10:25 [INFO] depgraph.core: added 82 nodes to graph
+2025-08-14 23:15:01 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:15:01 [INFO] depgraph.core: found 88 modules in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:15:01 [INFO] depgraph.core: added 88 nodes to graph
+2025-08-14 23:16:57 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:16:58 [INFO] depgraph.core: found 88 modules in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:16:58 [INFO] depgraph.core: added 88 nodes to graph
+2025-08-14 23:17:31 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:17:31 [INFO] depgraph.core: found 88 modules in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:17:31 [INFO] depgraph.core: added 88 nodes to graph
+2025-08-14 23:20:41 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:20:41 [INFO] depgraph.core: found 88 modules in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:20:41 [INFO] depgraph.core: added 88 nodes to graph
+2025-08-14 23:24:01 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:34:41 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:36:54 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:37:05 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:39:30 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:40:14 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:50:21 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:53:04 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:53:36 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-14 23:57:04 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:06:45 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:10:13 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:11:02 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:12:13 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:14:24 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:14:49 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:16:37 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:17:18 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:19:48 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:26:38 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:27:27 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:29:03 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:30:17 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:33:26 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 00:34:38 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 01:38:10 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 01:38:52 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi
+2025-08-15 01:39:59 [INFO] depgraph.core: found 92 files in C:\Users\оо8\Documents\py\jedi

@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 from pprint import pprint
 
+from ..utils import scan_python_modules
+
 
 class PythonFileAnalyzer:
     def __init__(self, root_dir: Path):
@@ -58,26 +60,8 @@ class ModuleScanner:
         modules: словарь {имя модуля: путь к файлу}
         """
         self.root_dir = root_dir.resolve()
-        self.modules = self._scan_modules()
+        self.modules = scan_python_modules(self.root_dir)
 
-    def _scan_modules(self):
-        """
-        Сканирует root_dir и возвращает словарь всех импортируемых модулей/пакетов:
-        { 'package.module': Path_to_module_or___init__.py }
-        """
-        modules = {}
-        for path in self.root_dir.rglob("*.py"):
-            rel_path = path.relative_to(self.root_dir).with_suffix("")
-            parts = rel_path.parts
-            if parts[-1] == "__init__":
-                # Пакет
-                full_name = ".".join(parts[:-1])
-            else:
-                # Модуль
-                full_name = ".".join(parts)
-            if full_name:
-                modules[full_name] = path.resolve()
-        return modules
 
     def resolve_imports(self, imports_list, file_path: Path):
         """
