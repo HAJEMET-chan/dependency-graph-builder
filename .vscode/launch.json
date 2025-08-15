@@ -7,7 +7,7 @@
             "request": "launch",
             "module": "depgraph.front.main",
             "args": [
-                "C:\\Users\\оо8\\Documents\\py\\jedi"
+                "C:\\Users\\Public\\dependency-graph-builder\\depgraph"
             ],
             "justMyCode": false,
             "console": "integratedTerminal"
