@@ -2,10 +2,8 @@ from pprint import pprint
 from pathlib import Path
 
 from .logging_setup import setup_logger
-from .analyzing.python_analyzer import PythonImportsAnalyzer
-from .dep_finding.python_dep_finder import PythonDepFinder
 from . import test_strings
-from .utils import _find_all_python_modules
+from .progress_bars import run_with_progress
 
 logger = setup_logger()
 
@@ -17,13 +15,9 @@ def main():
 def test_func():
     logger.info('START TEST FUNCTION')
 
-    PATH = Path(test_strings.TEST_PATH_DEPGRAPH).resolve()
+    PATH = Path(test_strings.TEST_PATH_SKLEARN).resolve()
 
-    dep_finder = PythonDepFinder(PATH)
-
-    dep_finder.start_dep_finding()
-
-    dep_dict = dep_finder.get_dep_dict()
+    run_with_progress(PATH)
 
     pass
 
