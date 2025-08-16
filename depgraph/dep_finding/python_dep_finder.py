@@ -7,15 +7,17 @@ from ..analyzing.python_analyzer import PythonImportsAnalyzer
 
 logger = logging.getLogger(__name__)
 
+
 class PythonDepFinder:
 
     def __init__(self, dir_path: Path):
         self._dir_path: Path = dir_path
         self._package_roots = _find_package_roots(dir_path)
-        self._dep_dict: Dict[Path: List] = self._to_dep_dict(_find_all_python_modules(dir_path))
+        self._dep_dict: Dict[Path:List] = self._to_dep_dict(
+            _find_all_python_modules(dir_path)
+        )
         self._modules: Set[Path] = self._dep_dict.keys()
         self._analyser = PythonImportsAnalyzer(dir_path)
-
 
     def _to_dep_dict(self, modules: List) -> Dict[Path, List]:
         dep_dict = {}
@@ -24,11 +26,11 @@ class PythonDepFinder:
             dep_dict[module] = []
 
         return dep_dict
-    
+
     def start_dep_finding(self):
 
         for importing_module in self._dep_dict.keys():
-            logger.debug(f'starting analyzing imports in {str(importing_module)}')
+            logger.debug(f"starting analyzing imports in {str(importing_module)}")
             self._analyze_module_deps(importing_module)
 
     def _analyze_module_deps(self, importing_module: Path):
@@ -117,12 +119,13 @@ class PythonDepFinder:
 
         if resolved_path:
             self._dep_dict[importing_module].append(resolved_path)
-            logger.debug(f"Resolved import {module_import} in {importing_module} -> {resolved_path}")
+            logger.debug(
+                f"Resolved import {module_import} in {importing_module} -> {resolved_path}"
+            )
         else:
-            logger.debug(f"Could not resolve import {module_import} in {importing_module}")
-
-
-
+            logger.debug(
+                f"Could not resolve import {module_import} in {importing_module}"
+            )
 
     def get_dep_dict(self):
         return self._dep_dict

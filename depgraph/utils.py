@@ -5,10 +5,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-__all__=[
-    '_validate_structure',
-    '_find_all_python_modules'
-]
+__all__ = ["_validate_structure", "_find_all_python_modules"]
+
 
 def _validate_structure(data, template_types, path=""):
     origin = get_origin(template_types)
@@ -26,8 +24,12 @@ def _validate_structure(data, template_types, path=""):
             (arg is type(None) and data is None) or isinstance(data, arg)
             for arg in args
         ):
-            expected = ', '.join([a.__name__ if a is not type(None) else "None" for a in args])
-            raise TypeError(f"Expected {expected} at '{path}', got {type(data).__name__}")
+            expected = ", ".join(
+                [a.__name__ if a is not type(None) else "None" for a in args]
+            )
+            raise TypeError(
+                f"Expected {expected} at '{path}', got {type(data).__name__}"
+            )
     elif origin:
         # list, dict, etc.
         if origin is list:
@@ -47,29 +49,31 @@ def _validate_structure(data, template_types, path=""):
     else:
         # обычный тип
         if not isinstance(data, template_types):
-            raise TypeError(f"Expected {template_types.__name__} at '{path}', got {type(data).__name__}")
+            raise TypeError(
+                f"Expected {template_types.__name__} at '{path}', got {type(data).__name__}"
+            )
 
 
 def _find_all_python_modules(dir_path: Path):
 
     if not dir_path.exists():
-        raise FileExistsError(f'specified path {str(dir_path)} does not exist')
-    
-    if not dir_path.is_dir():
-        raise FileExistsError(f'specified path {str(dir_path)} is not a directory')
-    
-    logger.debug(f'start searching python modules in {str(dir_path)}')
+        raise FileExistsError(f"specified path {str(dir_path)} does not exist")
 
-    modules = list(dir_path.glob('**/*.py'))
+    if not dir_path.is_dir():
+        raise FileExistsError(f"specified path {str(dir_path)} is not a directory")
+
+    logger.debug(f"start searching python modules in {str(dir_path)}")
+
+    modules = list(dir_path.glob("**/*.py"))
 
     for i in range(len(modules)):
         modules[i] = modules[i].relative_to(dir_path)
-        logger.debug(f'Found Python module in {str(modules[i])}')
+        logger.debug(f"Found Python module in {str(modules[i])}")
     else:
-        logger.info(f'founded {len(modules)} modules in {str(dir_path)}')
-
+        logger.info(f"founded {len(modules)} modules in {str(dir_path)}")
 
     return modules
+
 
 def _find_package_roots(project_root: Path) -> Set[Path]:
     """

@@ -1,6 +1,7 @@
 import logging
 import sys
 
+
 def setup_logger():
     # Создаём корневой логгер
     logger = logging.getLogger()
@@ -9,7 +10,7 @@ def setup_logger():
     # Формат сообщений
     formatter = logging.Formatter(
         fmt="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     # Вывод в stdout

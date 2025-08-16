@@ -7,13 +7,15 @@ from .progress_bars import run_with_progress
 
 logger = setup_logger()
 
+
 def main():
-    logger.info('APPLICATION START')
+    logger.info("APPLICATION START")
 
     pass
 
+
 def test_func():
-    logger.info('START TEST FUNCTION')
+    logger.info("START TEST FUNCTION")
 
     PATH = Path(test_strings.TEST_PATH_SKLEARN).resolve()
 
@@ -22,5 +24,5 @@ def test_func():
     pass
 
 
-if __name__=='__main__':
+if __name__ == "__main__":
     test_func()
