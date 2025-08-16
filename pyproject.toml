@@ -10,9 +10,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<4.0"
 tqdm = "^4.67.1"
 networkx = "^3.5"
+pyvis = "^0.3.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"

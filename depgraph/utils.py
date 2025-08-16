@@ -2,6 +2,8 @@ import logging
 import types
 from pathlib import Path
 from typing import Any, Dict, List, Set, Union, get_args, get_origin
+from pyvis.network import Network
+import networkx as nx
 
 logger = logging.getLogger(__name__)
 
@@ -101,3 +103,57 @@ def _find_package_roots(project_root: Path) -> Set[Path]:
             roots.add(candidate)
 
     return roots
+
+
+def unique_paths(paths: List[Path]) -> List[Path]:
+    """
+    Убирает дубликаты из списка относительных путей.
+    Возвращает их в нормализованном виде (без ./ и ../).
+
+    Args:
+        paths (List[Path]): список относительных путей
+
+    Returns:
+        List[Path]: список уникальных относительных путей
+    """
+    seen = set()
+    unique = []
+    for p in paths:
+        # Нормализуем путь (убираем ./, ../)
+        norm = Path(p).resolve().relative_to(Path.cwd())
+        if norm not in seen:
+            seen.add(norm)
+            unique.append(norm)
+    return unique
+
+
+def visualize_graph(graph: nx.DiGraph, output_file: str = "graph.html") -> None:
+    """
+    Визуализирует directed graph с PyVis, используя label нод.
+
+    Args:
+        graph (nx.DiGraph): Граф для визуализации.
+        output_file (str): Имя HTML-файла для вывода.
+    """
+    # Создаём сеть PyVis, отключаем notebook режим
+    net = Network(
+        directed=True,
+        height="750px",
+        width="100%",
+        notebook=False,
+        bgcolor="#ffffff",
+        font_color="#000000"
+    )
+
+    # Добавляем ноды с их label
+    for node, data in graph.nodes(data=True):
+        label = data.get("label", str(node))
+        net.add_node(str(node), label=str(label))
+
+    # Добавляем ребра
+    for from_node, to_node in graph.edges():
+        net.add_edge(str(from_node), str(to_node))
+
+    # Генерация и открытие HTML
+    net.show(output_file, notebook=False)
+    print(f"Graph saved to {output_file}")

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, KeysView, List, Optional
 
 from ..analyzing.python_analyzer import PythonImportsAnalyzer
-from ..utils import _find_all_python_modules, _find_package_roots
+from ..utils import _find_all_python_modules, _find_package_roots, unique_paths
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +45,10 @@ class PythonDepFinder:
 
         for module_import in deps:
             self._resolve_import_path(module_import, importing_module)
+
+        self._dep_dict[importing_module] = unique_paths(
+            self._dep_dict[importing_module]
+        )
 
     def _resolve_import_path(self, module_import: Dict, importing_module: Path) -> None:
         """

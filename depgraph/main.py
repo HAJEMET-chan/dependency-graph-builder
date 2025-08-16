@@ -1,8 +1,10 @@
 from pathlib import Path
 
 from . import test_strings
+from .dep_finding.python_dep_finder import PythonDepFinder
+from .graph_building.graph_creator import GraphCreator
 from .logging_setup import setup_logger
-from .progress_bars import run_with_progress
+from .utils import visualize_graph
 
 logger = setup_logger()
 
@@ -16,10 +18,18 @@ def main() -> None:
 def test_func() -> None:
     logger.info("START TEST FUNCTION")
 
-    PATH = Path(test_strings.TEST_PATH_SKLEARN).resolve()
+    PATH = Path(test_strings.TEST_PATH_DEPGRAPH).resolve()
 
-    run_with_progress(PATH)
+    dep_finder = PythonDepFinder(PATH)
+    graph_creator = GraphCreator()
 
+
+    dep_finder.start_dep_finding()
+    graph_creator.build_graph(dep_finder.get_dep_dict())
+
+    visualize_graph(graph_creator.get_graph())
+
+    print("end")
     pass
 
 
