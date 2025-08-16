@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict, Set, Callable
+from typing import List, Dict, Set
 import logging
 
 from ..utils import _find_all_python_modules, _find_package_roots
@@ -9,14 +9,12 @@ logger = logging.getLogger(__name__)
 
 class PythonDepFinder:
 
-    def __init__(self, dir_path, module_progress_callback: Callable = None, import_progress_callback: Callable = None):
-        self._dir_path = dir_path
+    def __init__(self, dir_path: Path):
+        self._dir_path: Path = dir_path
         self._package_roots = _find_package_roots(dir_path)
-        self._dep_dict = self._to_dep_dict(_find_all_python_modules(dir_path))
-        self._modules = self._dep_dict.keys()
+        self._dep_dict: Dict[Path: List] = self._to_dep_dict(_find_all_python_modules(dir_path))
+        self._modules: Set[Path] = self._dep_dict.keys()
         self._analyser = PythonImportsAnalyzer(dir_path)
-        self._module_progress_callback = module_progress_callback
-        self._import_progress_callback = import_progress_callback
 
 
     def _to_dep_dict(self, modules: List) -> Dict[Path, List]:
@@ -28,11 +26,10 @@ class PythonDepFinder:
         return dep_dict
     
     def start_dep_finding(self):
+
         for importing_module in self._dep_dict.keys():
             logger.debug(f'starting analyzing imports in {str(importing_module)}')
             self._analyze_module_deps(importing_module)
-            if self._module_progress_callback:
-                self._module_progress_callback(1) 
 
     def _analyze_module_deps(self, importing_module: Path):
 
@@ -42,11 +39,10 @@ class PythonDepFinder:
         self._analyser.clear_results()
         self._resolve_imports(deps, importing_module)
 
-    def _resolve_imports(self, deps, importing_module):
+    def _resolve_imports(self, deps: List, importing_module: Path):
+
         for module_import in deps:
             self._resolve_import_path(module_import, importing_module)
-            if self._import_progress_callback:
-                self._import_progress_callback(1)
 
     def _resolve_import_path(self, module_import: Dict, importing_module: Path):
         """
