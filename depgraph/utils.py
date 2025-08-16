@@ -1,4 +1,14 @@
-from typing import get_origin, get_args, Union
+from typing import get_origin, get_args, Union, Set
+from pathlib import Path
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+__all__=[
+    '_validate_structure',
+    '_find_all_python_modules'
+]
 
 def _validate_structure(data, template_types, path=""):
     origin = get_origin(template_types)
@@ -38,3 +48,49 @@ def _validate_structure(data, template_types, path=""):
         # обычный тип
         if not isinstance(data, template_types):
             raise TypeError(f"Expected {template_types.__name__} at '{path}', got {type(data).__name__}")
+
+
+def _find_all_python_modules(dir_path: Path):
+
+    if not dir_path.exists():
+        raise FileExistsError(f'specified path {str(dir_path)} does not exist')
+    
+    if not dir_path.is_dir():
+        raise FileExistsError(f'specified path {str(dir_path)} is not a directory')
+    
+    logger.debug(f'start searching python modules in {str(dir_path)}')
+
+    modules = list(dir_path.glob('**/*.py'))
+
+    for i in range(len(modules)):
+        modules[i] = modules[i].relative_to(dir_path)
+        logger.debug(f'Found Python module in {str(modules[i])}')
+    else:
+        logger.info(f'founded {len(modules)} modules in {str(dir_path)}')
+
+
+    return modules
+
+def _find_package_roots(project_root: Path) -> Set[Path]:
+    """
+    Находит только корневые пакеты в проекте.
+    Корневой пакет = папка, содержащая __init__.py,
+    но её родитель НЕ является пакетом.
+
+    Args:
+        project_root (Path): путь до корня проекта.
+
+    Returns:
+        Set[Path]: множество путей к корневым пакетам.
+    """
+    roots = set()
+
+    for init_file in project_root.rglob("__init__.py"):
+        candidate = init_file.parent
+        parent_init = candidate.parent / "__init__.py"
+
+        # если у родителя нет __init__.py → это root
+        if not parent_init.exists():
+            roots.add(candidate)
+
+    return roots

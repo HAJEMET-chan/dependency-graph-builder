@@ -1,8 +1,9 @@
 import ast
-from typing import Any, Optional, Dict
+from typing import Any, Optional, Dict, List
 from pprint import pprint
 from copy import deepcopy
 import logging
+from pathlib import Path
 
 from ..utils import (
     _validate_structure
@@ -12,27 +13,27 @@ __all__=['PythonImportsAnalyzer']
 logger = logging.getLogger(__name__)
 
 class PythonImportsAnalyzer(ast.NodeVisitor):
-    def __init__(self):
-        self._results = []
+    def __init__(self, root_folder: Path):
+        self._results: List = []
+        self._root_folder = root_folder
 
-        self._entry_tempate = {
+        self._entry_tempate: Dict = {
             'module': None,
             'name': None,
             'asname': None,
             'level': None
         }
 
-        self._entry_tempate_types = {
+        self._entry_tempate_types: Dict = {
             'module': Optional[str],
             'name': str,
             'asname': Optional[str],
             'level': int
         }
-    
-    def analyze(self, code: str):
 
-        logger.info('starting analyzing Python import')
+    def analyze(self, file_path: Path):
 
+        code = self._read_file(file_path)
         self.visit(ast.parse(code))
 
     def visit_Import(self, node: ast.Import):
@@ -89,5 +90,37 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
         return deepcopy(self._entry_tempate)
     
     def get_results(self):
-        return self._results
+        return deepcopy(self._results)
+    
+    def _read_file(self, file_path: Path) -> Optional[str]:
+        """
+        Считывает содержимое Python-файла.
+
+        Args:
+            file_path (Path): относительный путь к Python-файлу 
+                            (относительно self._root_folder).
+
+        Returns:
+            Optional[str]: содержимое файла или None, если файл не удалось прочитать.
+        """
+        full_path = self._root_folder / file_path
+
+        if not full_path.exists():
+            raise FileNotFoundError(f"Файл не найден: {full_path}")
+
+        if not full_path.is_file():
+            raise ValueError(f"Ожидался файл, но получен каталог: {full_path}")
+
+        try:
+            return full_path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            raise UnicodeDecodeError(
+                f"Не удалось декодировать файл {full_path} в кодировке utf-8"
+            )
+        except OSError as e:
+            raise OSError(f"Ошибка при чтении файла {full_path}: {e}")
+
+        
+    def clear_results(self):
+        self._results = []
     

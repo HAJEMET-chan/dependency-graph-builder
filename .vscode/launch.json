@@ -5,7 +5,7 @@
             "name": "Poetry depgraph debug",
             "type": "debugpy",
             "request": "launch",
-            "module": "depgraph.front.main",
+            "module": "depgraph.main",
             "args": [
                 "C:\\Users\\Public\\dependency-graph-builder\\depgraph"
             ],
