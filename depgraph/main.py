@@ -7,13 +7,13 @@ from .progress_bars import run_with_progress
 logger = setup_logger()
 
 
-def main():
+def main() -> None:
     logger.info("APPLICATION START")
 
     pass
 
 
-def test_func():
+def test_func() -> None:
     logger.info("START TEST FUNCTION")
 
     PATH = Path(test_strings.TEST_PATH_SKLEARN).resolve()

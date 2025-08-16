@@ -1,6 +1,7 @@
 import logging
+import types
 from pathlib import Path
-from typing import Set, Union, get_args, get_origin
+from typing import Any, Dict, List, Set, Union, get_args, get_origin
 
 logger = logging.getLogger(__name__)
 
@@ -8,7 +9,7 @@ logger = logging.getLogger(__name__)
 __all__ = ["_validate_structure", "_find_all_python_modules"]
 
 
-def _validate_structure(data, template_types, path=""):
+def _validate_structure(data: Dict, template_types: Any, path: str = "") -> None:
     origin = get_origin(template_types)
     args = get_args(template_types)
 
@@ -19,7 +20,8 @@ def _validate_structure(data, template_types, path=""):
             if key not in data:
                 raise ValueError(f"Missing key '{path + key}' in data")
             _validate_structure(data[key], expected_type, f"{path}{key}.")
-    elif origin is Union:
+
+    elif origin in (Union, types.UnionType):
         if not any(
             (arg is type(None) and data is None) or isinstance(data, arg)
             for arg in args
@@ -30,31 +32,32 @@ def _validate_structure(data, template_types, path=""):
             raise TypeError(
                 f"Expected {expected} at '{path}', got {type(data).__name__}"
             )
+
+    elif origin is list:
+        if not isinstance(data, list):
+            raise TypeError(f"Expected list at '{path}', got {type(data).__name__}")
+        for i, item in enumerate(data):
+            _validate_structure(item, args[0], f"{path}[{i}].")
+
+    elif origin is dict:
+        if not isinstance(data, dict):
+            raise TypeError(f"Expected dict at '{path}', got {type(data).__name__}")
+        key_type, val_type = args
+        for k, v in data.items():
+            _validate_structure(k, key_type, f"{path}.<key>")
+            _validate_structure(v, val_type, f"{path}[{k}].")
+
     elif origin:
-        # list, dict, etc.
-        if origin is list:
-            if not isinstance(data, list):
-                raise TypeError(f"Expected list at '{path}', got {type(data).__name__}")
-            for i, item in enumerate(data):
-                _validate_structure(item, args[0], f"{path}[{i}].")
-        elif origin is dict:
-            if not isinstance(data, dict):
-                raise TypeError(f"Expected dict at '{path}', got {type(data).__name__}")
-            key_type, val_type = args
-            for k, v in data.items():
-                _validate_structure(k, key_type, f"{path}.<key>")
-                _validate_structure(v, val_type, f"{path}[{k}].")
-        else:
-            raise TypeError(f"Unsupported type {template_types} at '{path}'")
+        raise TypeError(f"Unsupported type {template_types} at '{path}'")
+
     else:
-        # обычный тип
         if not isinstance(data, template_types):
             raise TypeError(
                 f"Expected {template_types.__name__} at '{path}', got {type(data).__name__}"
             )
 
 
-def _find_all_python_modules(dir_path: Path):
+def _find_all_python_modules(dir_path: Path) -> List[Path]:
 
     if not dir_path.exists():
         raise FileExistsError(f"specified path {str(dir_path)} does not exist")

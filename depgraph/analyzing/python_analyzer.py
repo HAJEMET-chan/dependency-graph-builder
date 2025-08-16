@@ -29,12 +29,15 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
             "level": int,
         }
 
-    def analyze(self, file_path: Path):
+    def analyze(self, file_path: Path) -> None:
 
         code = self._read_file(file_path)
-        self.visit(ast.parse(code))
+        if code is not None:
+            self.visit(ast.parse(code))
+        else:
+            raise OSError(f"Ошибка при чтении файла {str(file_path)}")
 
-    def visit_Import(self, node: ast.Import):
+    def visit_Import(self, node: ast.Import) -> None:
 
         logger.debug("found an ast.Import node")
 
@@ -56,7 +59,7 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
 
             self._add_to_results(entry)
 
-    def visit_ImportFrom(self, node: ast.ImportFrom):
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
 
         logger.debug("found an ast.ImportFrom node")
 
@@ -73,7 +76,7 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
 
             self._add_to_results(entry)
 
-    def _add_to_results(self, res: Dict):
+    def _add_to_results(self, res: Dict) -> None:
         _validate_structure(res, self._entry_tempate_types)
 
         logger.debug(
@@ -88,10 +91,10 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
 
         self._results.append(res)
 
-    def get_entry_template(self):
+    def get_entry_template(self) -> Dict:
         return deepcopy(self._entry_tempate)
 
-    def get_results(self):
+    def get_results(self) -> List:
         return deepcopy(self._results)
 
     def _read_file(self, file_path: Path) -> Optional[str]:
@@ -115,12 +118,16 @@ class PythonImportsAnalyzer(ast.NodeVisitor):
 
         try:
             return full_path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
+        except UnicodeDecodeError as e:
             raise UnicodeDecodeError(
-                f"Не удалось декодировать файл {full_path} в кодировке utf-8"
-            )
+                e.encoding,
+                e.object,
+                e.start,
+                e.end,
+                f"Не удалось декодировать файл {full_path} в кодировке utf-8",
+            ) from e
         except OSError as e:
             raise OSError(f"Ошибка при чтении файла {full_path}: {e}")
 
-    def clear_results(self):
+    def clear_results(self) -> None:
         self._results = []

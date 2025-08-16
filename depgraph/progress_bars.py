@@ -1,11 +1,12 @@
 from pathlib import Path
+from typing import Dict
 
 from tqdm import tqdm
 
 from .dep_finding.python_dep_finder import PythonDepFinder  # импортируем твой класс
 
 
-def run_with_progress(dir_path: Path):
+def run_with_progress(dir_path: Path) -> Dict:
     finder = PythonDepFinder(dir_path)
     modules = list(finder._dep_dict.keys())
 

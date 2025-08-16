@@ -2,7 +2,7 @@ import logging
 import sys
 
 
-def setup_logger():
+def setup_logger() -> logging.Logger:
     # Создаём корневой логгер
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)  # минимальный уровень для всего приложения

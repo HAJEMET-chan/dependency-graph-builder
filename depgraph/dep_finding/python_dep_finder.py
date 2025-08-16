@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict, KeysView, List, Optional
 
 from ..analyzing.python_analyzer import PythonImportsAnalyzer
 from ..utils import _find_all_python_modules, _find_package_roots
@@ -13,27 +13,27 @@ class PythonDepFinder:
     def __init__(self, dir_path: Path):
         self._dir_path: Path = dir_path
         self._package_roots = _find_package_roots(dir_path)
-        self._dep_dict: Dict[Path:List] = self._to_dep_dict(
+        self._dep_dict: Dict[Path, List] = self._to_dep_dict(
             _find_all_python_modules(dir_path)
         )
-        self._modules: Set[Path] = self._dep_dict.keys()
+        self._modules: KeysView[Path] = self._dep_dict.keys()
         self._analyser = PythonImportsAnalyzer(dir_path)
 
     def _to_dep_dict(self, modules: List) -> Dict[Path, List]:
-        dep_dict = {}
+        dep_dict: Dict[Path, List] = {}
 
         for module in modules:
             dep_dict[module] = []
 
         return dep_dict
 
-    def start_dep_finding(self):
+    def start_dep_finding(self) -> None:
 
         for importing_module in self._dep_dict.keys():
             logger.debug(f"starting analyzing imports in {str(importing_module)}")
             self._analyze_module_deps(importing_module)
 
-    def _analyze_module_deps(self, importing_module: Path):
+    def _analyze_module_deps(self, importing_module: Path) -> None:
 
         self._analyser.analyze(importing_module)
 
@@ -41,19 +41,19 @@ class PythonDepFinder:
         self._analyser.clear_results()
         self._resolve_imports(deps, importing_module)
 
-    def _resolve_imports(self, deps: List, importing_module: Path):
+    def _resolve_imports(self, deps: List, importing_module: Path) -> None:
 
         for module_import in deps:
             self._resolve_import_path(module_import, importing_module)
 
-    def _resolve_import_path(self, module_import: Dict, importing_module: Path):
+    def _resolve_import_path(self, module_import: Dict, importing_module: Path) -> None:
         """
         Разрешает путь импортируемого модуля внутри проекта и добавляет его в dep_dict.
         Внешние зависимости (stdlib, сторонние пакеты) игнорируются.
         """
-        level = module_import.get("level", 0)
-        module = module_import.get("module")
-        name = module_import.get("name")
+        level: int = module_import.get("level", 0)
+        module: Optional[str] = module_import.get("module")
+        name: str = module_import.get("name")
 
         resolved_path = None
 
@@ -127,5 +127,5 @@ class PythonDepFinder:
                 f"Could not resolve import {module_import} in {importing_module}"
             )
 
-    def get_dep_dict(self):
+    def get_dep_dict(self) -> Dict:
         return self._dep_dict
