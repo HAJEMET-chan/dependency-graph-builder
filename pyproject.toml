@@ -13,6 +13,57 @@ packages = [
 python = "^3.11"
 tqdm = "^4.67.1"
 
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+ruff = "^0.12.9"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+# Общие настройки
+line-length = 88
+target-version = "py38"
+
+# Включаем проверку ошибок E (PEP8), F (логика), I (импорты)
+select = ["E", "F", "I"]
+
+# Игнорируем конкретные ошибки, если нужно
+ignore = ["E501"]  # длинные строки
+
+# Автоисправление
+fixable = true
+
+# Настройка сортировки импортов (альтернатива isort)
+[tool.ruff.isort]
+profile = "black"
+
+# Игнорировать файлы/папки
+exclude = [
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "build",
+    "dist"
+]
