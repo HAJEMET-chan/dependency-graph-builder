@@ -1,9 +1,9 @@
-from pathlib import Path
-from typing import List, Dict, Set
 import logging
+from pathlib import Path
+from typing import Dict, List, Set
 
-from ..utils import _find_all_python_modules, _find_package_roots
 from ..analyzing.python_analyzer import PythonImportsAnalyzer
+from ..utils import _find_all_python_modules, _find_package_roots
 
 logger = logging.getLogger(__name__)
 

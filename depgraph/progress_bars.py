@@ -1,5 +1,7 @@
-from tqdm import tqdm
 from pathlib import Path
+
+from tqdm import tqdm
+
 from .dep_finding.python_dep_finder import PythonDepFinder  # импортируем твой класс
 
 

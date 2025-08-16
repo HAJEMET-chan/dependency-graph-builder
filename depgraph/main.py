@@ -1,8 +1,7 @@
-from pprint import pprint
 from pathlib import Path
 
-from .logging_setup import setup_logger
 from . import test_strings
+from .logging_setup import setup_logger
 from .progress_bars import run_with_progress
 
 logger = setup_logger()

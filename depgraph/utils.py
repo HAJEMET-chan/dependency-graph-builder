@@ -1,6 +1,6 @@
-from typing import get_origin, get_args, Union, Set
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import Set, Union, get_args, get_origin
 
 logger = logging.getLogger(__name__)
 
