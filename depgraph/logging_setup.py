@@ -19,7 +19,7 @@ def setup_logger() -> logging.Logger:
     console_handler.setFormatter(formatter)
 
     # Запись в файл
-    file_handler = logging.FileHandler("app.log", encoding="utf-8")
+    file_handler = logging.FileHandler("app.log", mode="w", encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)  # более подробные логи в файл
     file_handler.setFormatter(formatter)
 

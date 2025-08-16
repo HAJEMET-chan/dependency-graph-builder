@@ -35,8 +35,9 @@ class PythonDepFinder:
 
     def _analyze_module_deps(self, importing_module: Path) -> None:
 
+        logger.debug(f"Starting analyzing {str(importing_module)}")
         self._analyser.analyze(importing_module)
-
+        logger.debug(f"Succsessfuly ananlyzed {str(importing_module)}")
         deps = self._analyser.get_results()
         self._analyser.clear_results()
         self._resolve_imports(deps, importing_module)
