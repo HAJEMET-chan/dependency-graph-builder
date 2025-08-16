@@ -44,8 +44,8 @@ class App(tk.Tk):
     def select_save_file(self):
         self.save_path = filedialog.asksaveasfilename(
             title="Выберите куда сохранить граф",
-            defaultextension=".png",
-            filetypes=[("PNG files", "*.png"), ("All files", "*.*")]
+            defaultextension=".html",
+            filetypes=[("HTML files", "*.html"), ("All files", "*.*")]
         )
         if self.save_path:
             self.log(f"Файл для сохранения графа: {self.save_path}")
@@ -80,7 +80,6 @@ class App(tk.Tk):
         self.log_text.insert(tk.END, message + "\n")
         self.log_text.see(tk.END)
 
-
-if __name__ == "__main__":
+def run():
     app = App()
     app.mainloop()
