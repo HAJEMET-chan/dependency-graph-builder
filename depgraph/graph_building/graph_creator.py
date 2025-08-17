@@ -1,9 +1,11 @@
+import logging
 from pathlib import Path
 from typing import Dict
-import logging
+
 import networkx as nx
 
 logger = logging.getLogger(__name__)
+
 
 class GraphCreator:
     def __init__(self):
@@ -17,7 +19,7 @@ class GraphCreator:
     def _node_from_path(self, module: Path) -> None:
         label = str(module.parent if module.stem == "__init__" else module)
         self._graph.add_node(module, label=label)
-        logger.debug(f'Added {str(module)} module to graph')
+        logger.debug(f"Added {str(module)} module to graph")
 
     def _edges_from_dict(self) -> None:
         for importing_module in self._dep_dict.keys():
@@ -31,7 +33,9 @@ class GraphCreator:
                 else imported_module
             )
             self._graph.add_edge(importing_module, to_node, label="import")
-            logger.debug(f'Added {str(importing_module)} -> {str(to_node)} edge to graph')
+            logger.debug(
+                f"Added {str(importing_module)} -> {str(to_node)} edge to graph"
+            )
 
     def build_graph(self, dep_dict: Dict[Path, list[Path]]) -> None:
         logger.info("Starting building local dependencies graph")

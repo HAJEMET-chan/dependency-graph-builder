@@ -1,35 +1,32 @@
 import logging
 from pathlib import Path
-from typing import Dict, KeysView, List, Optional
+from typing import Dict, List, Optional, Set
 
 from ..analyzing.python_analyzer import PythonImportsAnalyzer
-from ..utils import _find_all_python_modules, _find_package_roots, unique_paths
+from ..utils import unique_paths, _get_sibling_python_files
 
 logger = logging.getLogger(__name__)
 
 
 class PythonDepFinder:
 
-    def __init__(self, dir_path: Path):
-        self._dir_path: Path = dir_path
-        self._package_roots = _find_package_roots(dir_path)
-        self._dep_dict: Dict[Path, List] = self._to_dep_dict(
-            _find_all_python_modules(dir_path)
-        )
-        self._modules: KeysView[Path] = self._dep_dict.keys()
-        self._analyser = PythonImportsAnalyzer(dir_path)
-
-    def _to_dep_dict(self, modules: List) -> Dict[Path, List]:
-        dep_dict: Dict[Path, List] = {}
-
-        for module in modules:
-            dep_dict[module] = []
-
-        return dep_dict
+    def __init__(
+        self,
+        dir_path: Path,
+        project_roots: Set,
+        dep_dict: Dict,
+        modules: List,
+        analyser: PythonImportsAnalyzer,
+    ):
+        self._dir_path = dir_path
+        self._project_roots = project_roots
+        self._dep_dict = dep_dict
+        self._modules = modules
+        self._analyser = analyser
 
     def start_dep_finding(self) -> None:
 
-        for importing_module in self._dep_dict.keys():
+        for importing_module in self._modules:
             logger.debug(f"starting analyzing imports in {str(importing_module)}")
             self._analyze_module_deps(importing_module)
 
@@ -43,9 +40,13 @@ class PythonDepFinder:
         self._resolve_imports(deps, importing_module)
 
     def _resolve_imports(self, deps: List, importing_module: Path) -> None:
+        
 
         for module_import in deps:
             self._resolve_import_path(module_import, importing_module)
+
+        if importing_module.name == '__init__.py':
+            self._dep_dict[importing_module].extend(_get_sibling_python_files(importing_module))
 
         self._dep_dict[importing_module] = unique_paths(
             self._dep_dict[importing_module]
@@ -63,7 +64,7 @@ class PythonDepFinder:
         resolved_path = None
 
         if level == 0:
-            for root in self._package_roots:
+            for root in self._project_roots:
                 if module:
                     parts = module.split(".")
                     # если первый элемент модуля совпадает с именем рутового пакета, убираем его

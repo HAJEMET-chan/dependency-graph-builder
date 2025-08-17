@@ -1,85 +1,123 @@
-import tkinter as tk
-from tkinter import filedialog, messagebox, scrolledtext
 from pathlib import Path
 
-from . import test_strings
+from .analyzing.python_analyzer import PythonImportsAnalyzer
 from .dep_finding.python_dep_finder import PythonDepFinder
 from .graph_building.graph_creator import GraphCreator
 from .logging_setup import setup_logger
-from .utils import visualize_graph
+from .utils import (
+    _find_all_python_modules,
+    _find_project_roots,
+    _to_dep_dict,
+    visualize_graph,
+
+)
 
 logger = setup_logger()
 
 
-class App(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Dependency Graph Builder")
-        self.geometry("600x400")
+class Depgraph:
 
-        self.project_path = None
-        self.save_path = None
+    def __init__(self) -> None:
+        self._dep_finder = None
+        self._graph_creator = None
+        self._analyzer = None
+        self._project_path = None
+        self._save_file_path = None
+        self._all_modules = None
+        self._project_roots = None
+        self._dep_dict = None
+        self._graph = None
+        self._suffix = ".html"
 
-        # Кнопка выбора директории проекта
-        self.select_dir_btn = tk.Button(self, text="Выбрать проект", command=self.select_project_dir)
-        self.select_dir_btn.pack(pady=10)
+    def set_proj_path(self, path: str) -> None:
 
-        # Кнопка выбора места сохранения графа
-        self.select_save_btn = tk.Button(self, text="Выбрать файл для графа", command=self.select_save_file)
-        self.select_save_btn.pack(pady=10)
+        if not isinstance(path, str):
+            raise ValueError(f"path is need to be a string but given {type(path)}")
 
-        # Кнопка запуска анализа
-        self.run_btn = tk.Button(self, text="Запустить анализ", command=self.run_analysis)
-        self.run_btn.pack(pady=10)
+        temp_path = Path(path).resolve()
 
-        # Окно для логов
-        self.log_text = scrolledtext.ScrolledText(self, height=10)
-        self.log_text.pack(fill="both", expand=True, padx=10, pady=10)
+        if not temp_path.exists():
+            FileExistsError(f"given path {str(temp_path)} does not exist")
 
-    def select_project_dir(self):
-        self.project_path = Path(filedialog.askdirectory(title="Выберите директорию проекта"))
-        if self.project_path:
-            self.log(f"Выбрана директория проекта: {self.project_path}")
+        if not temp_path.is_dir():
+            FileExistsError(f"given path {str(temp_path)} is not a string")
 
-    def select_save_file(self):
-        self.save_path = filedialog.asksaveasfilename(
-            title="Выберите куда сохранить граф",
-            defaultextension=".html",
-            filetypes=[("HTML files", "*.html"), ("All files", "*.*")]
+        self._project_path = temp_path
+
+    def set_save_file_path(self, path: str) -> None:
+
+        if not isinstance(path, str):
+            raise ValueError(f"path is need to be a string but given {type(path)}")
+
+        temp_path = Path(path).resolve()
+
+        if not temp_path.exists():
+            FileExistsError(f"given path {str(temp_path)} does not exist")
+
+        if not temp_path.is_file():
+            FileExistsError(f"given path {str(temp_path)} is not a file")
+
+        if not temp_path.suffix == self._suffix:
+            raise ValueError(
+                f"given`s file suffix need to be '{self._suffix}' but given '{temp_path.suffix}'"
+            )
+
+        self._save_file_path = temp_path
+
+    def start_dep_finding(self) -> None:
+
+        self._prepare_for_start()
+        self._dep_finder.start_dep_finding()
+
+    def start_graph_generating(self) -> None:
+
+        self._graph_creator.build_graph(self._dep_dict)
+        self._graph = self._graph_creator._graph
+
+    def _prepare_for_start(self) -> None:
+
+        self._prepare_data()
+        self._analyzer = PythonImportsAnalyzer(self._project_path)
+        self._graph_creator = GraphCreator()
+        self._dep_finder = PythonDepFinder(
+            dir_path=self._project_path,
+            project_roots=self._project_roots,
+            dep_dict=self._dep_dict,
+            modules=self._all_modules,
+            analyser=self._analyzer,
         )
-        if self.save_path:
-            self.log(f"Файл для сохранения графа: {self.save_path}")
 
-    def run_analysis(self):
-        if not self.project_path:
-            messagebox.showwarning("Ошибка", "Сначала выберите директорию проекта")
-            return
-        if not self.save_path:
-            messagebox.showwarning("Ошибка", "Сначала выберите файл для сохранения графа")
-            return
+    def _prepare_data(self) -> None:
 
-        self.log("APPLICATION START")
-        try:
-            dep_finder = PythonDepFinder(self.project_path)
-            graph_creator = GraphCreator()
+        if not self._project_path:
+            raise ValueError(
+                "project path not specified. use 'Depgraph.set_proj_path()' to set it"
+            )
 
-            self.log("Начало поиска зависимостей...")
-            dep_finder.start_dep_finding()
-            self.log("Зависимости найдены")
+        if not self._save_file_path:
+            raise ValueError(
+                "save file path not specified. use 'Depgraph.set_save_file_path()' to set it"
+            )
 
-            graph_creator.build_graph(dep_finder.get_dep_dict())
-            visualize_graph(graph_creator.get_graph(), self.save_path)
-            self.log(f"Граф сохранен: {self.save_path}")
-            messagebox.showinfo("Готово", "Анализ завершен успешно!")
-        except Exception as e:
-            self.log(f"Ошибка: {e}")
-            messagebox.showerror("Ошибка", str(e))
+        self._all_modules = _find_all_python_modules(self._project_path)
+        self._project_roots = _find_project_roots(self._project_path)
+        self._dep_dict = _to_dep_dict(self._all_modules)
 
-    def log(self, message: str):
-        logger.info(message)
-        self.log_text.insert(tk.END, message + "\n")
-        self.log_text.see(tk.END)
+    def visualize_graph_pyvis(self):
+        visualize_graph(
+            self._graph,
+            self._save_file_path,
+        )
 
-def run():
-    app = App()
-    app.mainloop()
+
+if __name__ == "__main__":
+    dg = Depgraph()
+
+    dg.set_proj_path(r"/home/hajemet/Рабочий стол/py/dependency-graph-builder")
+    dg.set_save_file_path(
+        r"/home/hajemet/Рабочий стол/py/dependency-graph-builder/graph.html"
+    )
+    dg.start_dep_finding()
+    dg.start_graph_generating()
+    dg.visualize_graph_pyvis()
+    print("end")

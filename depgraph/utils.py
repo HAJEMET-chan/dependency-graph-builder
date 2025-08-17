@@ -2,8 +2,9 @@ import logging
 import types
 from pathlib import Path
 from typing import Any, Dict, List, Set, Union, get_args, get_origin
-from pyvis.network import Network
+
 import networkx as nx
+from pyvis.network import Network
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +81,7 @@ def _find_all_python_modules(dir_path: Path) -> List[Path]:
     return modules
 
 
-def _find_package_roots(project_root: Path) -> Set[Path]:
+def _find_project_roots(project_root: Path) -> Set[Path]:
     """
     Находит только корневые пакеты в проекте.
     Корневой пакет = папка, содержащая __init__.py,
@@ -127,14 +128,17 @@ def unique_paths(paths: List[Path]) -> List[Path]:
     return unique
 
 
-def visualize_graph(graph: nx.DiGraph, output_file: str = "graph.html") -> None:
+def visualize_graph(graph: nx.DiGraph, output_file: Path = Path("graph.html")) -> None:
     """
     Визуализирует directed graph с PyVis, используя label нод.
 
     Args:
         graph (nx.DiGraph): Граф для визуализации.
-        output_file (str): Имя HTML-файла для вывода.
+        output_file (Path): Путь к HTML-файлу для вывода.
     """
+    if not isinstance(output_file, Path):
+        raise TypeError(f"output_file must be a pathlib.Path, got {type(output_file)}")
+
     # Создаём сеть PyVis, отключаем notebook режим
     net = Network(
         directed=True,
@@ -142,7 +146,7 @@ def visualize_graph(graph: nx.DiGraph, output_file: str = "graph.html") -> None:
         width="100%",
         notebook=False,
         bgcolor="#ffffff",
-        font_color="#000000"
+        font_color="#000000",
     )
 
     # Добавляем ноды с их label
@@ -150,10 +154,57 @@ def visualize_graph(graph: nx.DiGraph, output_file: str = "graph.html") -> None:
         label = data.get("label", str(node))
         net.add_node(str(node), label=str(label))
 
-    # Добавляем ребра
+    # Добавляем рёбра
     for from_node, to_node in graph.edges():
         net.add_edge(str(from_node), str(to_node))
 
-    # Генерация и открытие HTML
-    net.show(output_file, notebook=False)
+    # Генерация и сохранение HTML
+    net.show(str(output_file), notebook=False)
     print(f"Graph saved to {output_file}")
+
+
+def _to_dep_dict(modules: List) -> Dict[Path, List]:
+    dep_dict: Dict[Path, List] = {}
+
+    for module in modules:
+        dep_dict[module] = []
+
+    return dep_dict
+
+
+def _get_sibling_python_files(file_path: Path) -> List[Path]:
+    
+    siblings = []
+    root = file_path.parts[0]
+    parent_folder = file_path.parent.resolve()
+
+    for path in parent_folder.iterdir():
+
+        if path.is_dir() and (path / "__init__.py").exists():
+            sib_path = path / "__init__.py"
+
+            siblings.append(path / "__init__.py")
+            continue
+
+        if path.is_file() and path.name != "__init__.py":
+            siblings.append(path)
+            continue
+
+    relative_paths = []
+
+    for p in siblings:
+        try:
+            # ищем 'depgraph' в пути
+            depgraph_index = p.parts.index(root)
+            # строим относительный путь начиная с 'depgraph'
+            rel = Path(*p.parts[depgraph_index:])
+            relative_paths.append(rel)
+        except ValueError:
+            # 'depgraph' нет в этом пути
+            pass
+
+    return relative_paths
+
+
+
+    
